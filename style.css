@@ -339,41 +339,12 @@ body {
     color: #1e7bbf;
 }
 
-/* Markdown Text Elements */
-.main-video-wrapper .description-wrapper p,
-.main-video-wrapper .description-wrapper ul,
-.main-video-wrapper .description-wrapper ol {
+/* Description Text */
+.main-video-wrapper .description-wrapper p {
     font-size: 1rem;
     line-height: 1.5;
     margin-top: 0.5rem;
 }
-
-.main-video-wrapper .description-wrapper ul,
-.main-video-wrapper .description-wrapper ol {
-    padding-left: 1.5rem;
-}
-
-.main-video-wrapper .description-wrapper li {
-    margin-bottom: 0.5rem;
-}
-
-.main-video-wrapper .description-wrapper h1,
-.main-video-wrapper .description-wrapper h2,
-.main-video-wrapper .description-wrapper h3,
-.main-video-wrapper .description-wrapper h4,
-.main-video-wrapper .description-wrapper h5,
-.main-video-wrapper .description-wrapper h6 {
-    font-weight: bold;
-    margin: 0.5rem 0rem 1rem 0rem;
-    line-height: 1.2;
-}
-
-.main-video-wrapper .description-wrapper h1 {font-size: 1.25rem;}
-.main-video-wrapper .description-wrapper h2 {font-size: 1.2rem;}
-.main-video-wrapper .description-wrapper h3 {font-size: 1.15rem;}
-.main-video-wrapper .description-wrapper h4 {font-size: 1.1rem;}
-.main-video-wrapper .description-wrapper h5 {font-size: 1.05rem;}
-.main-video-wrapper .description-wrapper h6 {font-size: 1rem;}
 
 .main-video-wrapper .description-wrapper a {
     color: #3498db;
@@ -382,49 +353,6 @@ body {
 
 .main-video-wrapper .description-wrapper a:hover {
     text-decoration: underline;
-}
-
-.main-video-wrapper .description-wrapper code,
-.main-video-wrapper .description-wrapper pre {
-    font-size: 0.9rem;
-    margin: 0.625rem 0rem;
-    background-color: #191b1e;
-    font-family: monospace;
-}
-
-.main-video-wrapper .description-wrapper code {
-    border-radius: 0.3125rem;
-    padding: 0.2rem;
-}
-
-.main-video-wrapper .description-wrapper pre {
-    border-radius: 0.5rem;
-    padding: 0.94rem;
-    overflow-x: auto;
-}
-
-.main-video-wrapper .description-wrapper hr {
-    border: 0;
-    height: 1px;
-    background: #ccc;
-    margin: 1.5rem 0rem;
-}
-
-.main-video-wrapper .description-wrapper table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0.625rem 0rem;
-}
-
-.main-video-wrapper .description-wrapper th,
-.main-video-wrapper .description-wrapper td {
-    border: 1px solid #454a4e;
-    text-align: left;
-    padding: 0.94rem;
-}
-
-.main-video-wrapper .description-wrapper th {
-    background-color: #0003;
 }
 
 /* Playlist Section */
@@ -706,32 +634,6 @@ body {
 
     .main-video-wrapper .description-wrapper .see-all:hover {
         color: #3498db;
-    }
-
-    /* Adjust Markdown Text Elements */
-    .main-video-wrapper .description-wrapper p,
-    .main-video-wrapper .description-wrapper ul,
-    .main-video-wrapper .description-wrapper ol,
-    .main-video-wrapper .description-wrapper blockquote {
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
-
-    .main-video-wrapper .description-wrapper h1 {font-size: 1.1rem;}
-    .main-video-wrapper .description-wrapper h2 {font-size: 1.05rem;}
-    .main-video-wrapper .description-wrapper h3 {font-size: 1.02rem;}
-    .main-video-wrapper .description-wrapper h4 {font-size: 1rem;}
-    .main-video-wrapper .description-wrapper h5 {font-size: 0.95rem;}
-    .main-video-wrapper .description-wrapper h6 {font-size: 0.9rem;}
-
-    .main-video-wrapper .description-wrapper code,
-    .main-video-wrapper .description-wrapper pre {
-        font-size: 0.8rem;
-    }
-
-    .main-video-wrapper .description-wrapper th,
-    .main-video-wrapper .description-wrapper td {
-    padding: 0.625rem;
     }
 
     /* Adjust Playlist Section*/
