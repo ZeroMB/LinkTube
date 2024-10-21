@@ -266,8 +266,8 @@ const loadVideo = (videoId, description) => {
     elements.mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
     elements.mainVideoTitle.textContent = document.querySelector(`.video[data-id="${videoId}"] .title`).textContent;
 
-    const descriptionHtml = marked.parse(description || 'Nothing here!');
-    elements.descriptionWrapper.querySelector('.description').innerHTML = formatDescriptionLinks(descriptionHtml);
+    const formattedDescription = formatDescription(description || 'Nothing here!');
+    elements.descriptionWrapper.querySelector('.description').innerHTML = formattedDescription;
 
     elements.descriptionWrapper.classList.remove('expanded');
     elements.seeAllBtn.textContent = 'See all';
@@ -282,12 +282,41 @@ const loadVideo = (videoId, description) => {
     }
 };
 
-// Format Description Links
-const formatDescriptionLinks = html => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
-    tempDiv.querySelectorAll('a').forEach(link => link.setAttribute('target', '_blank'));
-    return tempDiv.innerHTML;
+// Format Description Text
+const formatDescription = (text) => {
+    let formattedText = text.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+
+    formattedText = formattedText.replace(
+        /(\d{1,2}:\d{2}(?::\d{2})?)/g, // Matches MM:SS or HH:MM:SS format
+        `<a href="javascript:void(0);" class="timestamp" data-time="$1">$1</a>`
+    );
+
+    formattedText = formattedText.replace(
+        /\*(.*?)\*/g, '<strong>$1</strong>'
+    );
+
+    return formattedText.replace(/\n/g, '<br>');
+};
+
+// Timestamps
+document.addEventListener('click', (event) => {
+    if (event.target.classList.contains('timestamp')) {
+        const time = event.target.dataset.time;
+        seekToTime(time);
+    }
+});
+
+// Seek to Specific Time
+const seekToTime = (time) => {
+    const parts = time.split(':').map(Number);
+    const seconds = parts.length === 3
+        ? parts[0] * 3600 + parts[1] * 60 + parts[2] // HH:MM:SS
+        : parts[0] * 60 + parts[1]; // MM:SS
+
+    elements.mainVideo.src = `${elements.mainVideo.src.split('?')[0]}?start=${seconds}&autoplay=1`;
 };
 
 // Reset Description View
