@@ -635,6 +635,11 @@ body {
     .main-video-wrapper .description-wrapper .see-all:hover {
         color: #3498db;
     }
+    
+    .main-video-wrapper .description-wrapper p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
 
     /* Adjust Playlist Section*/
     .title-logout {
