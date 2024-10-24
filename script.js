@@ -96,34 +96,6 @@ document.getElementById('okay-button').addEventListener('click', () => {
     elements.errorPopup.style.display = 'none';
 });
 
-// On DOM Loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const storedApiKey = localStorage.getItem('userApiKey');
-    const storedPlaylistId = localStorage.getItem('playlistId');
-    const hash = window.location.hash;
-    const playlistIdFromHash = hash ? hash.split('/').pop() : null;
-
-    apiKey = storedApiKey ? storedApiKey : defaultApiKey;
-
-    if ((isLoggedIn === 'true' && storedPlaylistId) || playlistIdFromHash) {
-        playlistId = playlistIdFromHash ? extractPlaylistId(playlistIdFromHash.replace('#', '')) : storedPlaylistId;
-
-        console.log('User is logged in or hash detected, loading playlist:', playlistId);
-
-        toggleLoginDisplay(false);
-
-        fetchPlaylistDetails();
-        fetchAllVideos();
-    } else {
-        console.log('User is not logged in or playlistId is missing, showing login page');
-        toggleLoginDisplay(true);
-    }
-
-    elements.seeAllBtn.addEventListener('click', toggleDescriptionExpansion);
-    elements.openDescriptionBtn.addEventListener('click', toggleFullDescription);
-});
-
 // Toggle Login Display
 const toggleLoginDisplay = showLogin => {
     elements.loginForm.style.display = showLogin ? 'block' : 'none';
@@ -190,13 +162,26 @@ const scrollToBottom = (element) => {
 elements.logoutButton.addEventListener('click', () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('playlistId');
+    localStorage.removeItem('lastWatchedVideoId');
+
     history.replaceState(null, null, window.location.pathname);
     playlistId = null;
     location.reload();
 });
 
+// Loading Overlay
+const showLoading = () => {
+    document.getElementById('loading-overlay').style.display = 'flex';
+};
+
+const hideLoading = () => {
+    document.getElementById('loading-overlay').style.display = 'none';
+};
+
 // Fetch Playlist Details from API
 const fetchPlaylistDetails = () => {
+    showLoading();
+
     fetch(`https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${apiKey}`)
         .then(response => response.json())
         .then(data => {
@@ -219,14 +204,45 @@ const fetchAllVideos = (pageToken = '') => {
 
             data.items.forEach(video => appendVideo(video));
 
-            if (data.nextPageToken) fetchAllVideos(data.nextPageToken);
-            else setupVideoClickEvents();
+            if (data.nextPageToken) {
+                fetchAllVideos(data.nextPageToken);
+            } else {
+                setupVideoClickEvents();
+                playLastWatchedVideo();
+                hideLoading();
+            }
         })
         .catch(error => {
             console.error('Error fetching videos:', error);
             showIncorrectPopup('Check Playlist ID or Change API Key.');
             toggleLoginDisplay(true);
+            hideLoading();
         });
+};
+
+// Play the Last Watched Video
+const playLastWatchedVideo = () => {
+    const lastWatchedVideoId = localStorage.getItem('lastWatchedVideoId');
+
+    if (lastWatchedVideoId) {
+        const lastWatchedVideoElement = document.querySelector(`.video[data-id="${lastWatchedVideoId}"]`);
+
+        if (lastWatchedVideoElement) {
+            document.querySelectorAll('.video').forEach(v => v.classList.remove('active'));
+            lastWatchedVideoElement.classList.add('active');
+
+            lastWatchedVideoElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            loadVideo(lastWatchedVideoId, lastWatchedVideoElement.dataset.description);
+        }
+    } else {
+        const firstVideo = document.querySelector('.video');
+
+        if (firstVideo) {
+            firstVideo.classList.add('active');
+            loadVideo(firstVideo.dataset.id, firstVideo.dataset.description);
+        }
+    }
 };
 
 // Append Video to Playlist
@@ -249,15 +265,13 @@ const appendVideo = video => {
 // Setup Video Click Events
 const setupVideoClickEvents = () => {
     const videos = document.querySelectorAll('.video');
-    if (videos.length) {
-        videos[0].classList.add('active');
-        loadVideo(videos[0].dataset.id, videos[0].dataset.description);
-    }
+
     videos.forEach(video => video.addEventListener('click', () => {
         videos.forEach(v => v.classList.remove('active'));
         video.classList.add('active');
         loadVideo(video.dataset.id, video.dataset.description);
     }));
+
     elements.videoInfo.textContent = `${elements.videoPlaylist.childElementCount} lessons`;
 };
 
@@ -269,18 +283,59 @@ const loadVideo = (videoId, description) => {
     const formattedDescription = formatDescription(description || 'Nothing here!');
     elements.descriptionWrapper.querySelector('.description').innerHTML = formattedDescription;
 
-    elements.descriptionWrapper.classList.remove('expanded');
-    elements.seeAllBtn.textContent = 'See all';
+    localStorage.setItem('lastWatchedVideoId', videoId);
 
     resetDescriptionView();
     scrollToTop(elements.mainVideoWrapper);
     toggleSeeAllButton();
 
-    if (window.innerWidth <= 990) {
+    if (window.innerWidth <= 768) {
         elements.descriptionWrapper.classList.remove('expanded');
         elements.seeAllBtn.textContent = 'See all';
     }
 };
+
+// On DOM Loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const storedApiKey = localStorage.getItem('userApiKey');
+    const storedPlaylistId = localStorage.getItem('playlistId');
+    const hash = window.location.hash;
+
+    const playlistIdFromHash = hash ? extractPlaylistId(hash.replace('#/', '').replace('#', '')) : null;
+    apiKey = storedApiKey || defaultApiKey;
+
+    if (playlistIdFromHash) {
+        const sanitizedId = playlistIdFromHash.trim();
+
+        if (storedPlaylistId && storedPlaylistId !== sanitizedId) {
+            console.log('Playlist ID changed, clearing lastWatchedVideoId');
+            localStorage.removeItem('lastWatchedVideoId');
+        }
+
+        localStorage.setItem('playlistId', sanitizedId);
+        localStorage.setItem('isLoggedIn', 'true');
+        playlistId = sanitizedId;
+
+        window.location.hash = `#/${sanitizedId}`;
+        console.log('URL-based login detected, loading playlist:', playlistId);
+    } else {
+        playlistId = storedPlaylistId;
+    }
+
+    if (isLoggedIn === 'true' && playlistId) {
+        console.log('User is logged in or playlistId exists, loading playlist:', playlistId);
+        toggleLoginDisplay(false);
+        fetchPlaylistDetails();
+        fetchAllVideos();
+    } else {
+        console.log('User is not logged in or playlistId is missing, showing login page');
+        toggleLoginDisplay(true);
+    }
+
+    elements.seeAllBtn.addEventListener('click', toggleDescriptionExpansion);
+    elements.openDescriptionBtn.addEventListener('click', toggleFullDescription);
+});
 
 // Format Description Text
 const formatDescription = (text) => {
