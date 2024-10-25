@@ -1,10 +1,8 @@
 /* CSS Variables */
 :root {
-    /* Colors */
     --primary: linear-gradient(to bottom right, #222222, #303b46);
     --secondary: #5f6870;
     --text: #ffffff;
-    --bg: #000000;
 }
 
 /* Universal Reset */
@@ -37,7 +35,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg);
+    background-color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,26 +43,39 @@ body {
 }
 
 .loader {
-   width: 45px;
-   height: 30px;
-   animation: l1 2s infinite linear;
+    width: 45px;
+    height: 30px;
+    animation: l1 2s infinite linear;
 }
-@keyframes l1{
-  0%,
-  25%  {background:
-          linear-gradient(#e50021 0 0) 50% 0/66% 100% no-repeat}
-  25.1%,
-  50%  {background:
-          linear-gradient(#004ce4 0 0) 0 0/100% 50% no-repeat,
-          linear-gradient(#004ce4 0 0) 0 0/33% 100% no-repeat}
-  50.1%,
-  75%  {background:
-          linear-gradient(#00e622 0 0) 100% 0/66% 50% no-repeat,
-          linear-gradient(#00e622 0 0) 0 100%/66% 50% no-repeat}
-  75.1%,
-  100% {background:
-          linear-gradient(#9d0be6 0 0) 0 100%/100% 50% no-repeat,
-          linear-gradient(#9d0be6 0 0) 50% 0 /33%  50% no-repeat}
+
+@keyframes l1 {
+
+    0%,
+    25% {
+        background:
+            linear-gradient(#e50021 0 0) 50% 0/66% 100% no-repeat
+    }
+
+    25.1%,
+    50% {
+        background:
+            linear-gradient(#004ce4 0 0) 0 0/100% 50% no-repeat,
+            linear-gradient(#004ce4 0 0) 0 0/33% 100% no-repeat
+    }
+
+    50.1%,
+    75% {
+        background:
+            linear-gradient(#00e622 0 0) 100% 0/66% 50% no-repeat,
+            linear-gradient(#00e622 0 0) 0 100%/66% 50% no-repeat
+    }
+
+    75.1%,
+    100% {
+        background:
+            linear-gradient(#9d0be6 0 0) 0 100%/100% 50% no-repeat,
+            linear-gradient(#9d0be6 0 0) 50% 0 /33% 50% no-repeat
+    }
 }
 
 /* Container Grid Layout */
@@ -528,4 +539,211 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Responsive for Mobile Screen */
+@media screen and (max-width: 990px) {
+
+    /* Adjust Login Form */
+    #login-section {
+        width: 20.125rem;
+    }
+
+    #login-form input[type="text"],
+    #login-form input[type="password"] {
+        font-size: 1rem;
+        padding: 0.94rem;
+        border: 1.125px solid var(--text);
+    }
+
+    #login-form button[type="submit"] {
+        font-size: 1rem;
+        padding: 0.94rem;
+    }
+
+    #change-api-key-label {
+        font-size: 1rem;
+        cursor: none;
+    }
+
+    #playlist-id {
+        padding-right: 2.625rem !important;
+    }
+
+    #toggle-password {
+        padding: 0.625rem;
+        cursor: none;
+    }
+
+    #eye-open {
+        width: 1rem;
+    }
+
+    #eye-closed {
+        width: 1rem;
+    }
+
+    .input {
+        gap: 1.3125rem;
+        margin-bottom: 2.625rem;
+    }
+
+    /* Adjust Incorrect Toast */
+    #incorrect-popup {
+        width: 21.25rem;
+        border: 1.14px solid #707070;
+        border-radius: 0.6rem;
+        padding: 0.94rem;
+    }
+
+    .icon-text {
+        gap: 0.94rem;
+    }
+
+    .cross {
+        width: 1.3125rem;
+        height: 1.3125rem;
+        border-radius: 0.3rem;
+    }
+
+    #cross-icon {
+        width: 8.5px;
+        height: 8.5px;
+    }
+
+    .toast-wrapper {
+        gap: 0.5rem;
+    }
+
+    .error-title {
+        font-size: 1.14rem;
+    }
+
+    .error-message {
+        font-size: 1rem;
+    }
+
+    .okay-button {
+        font-size: 0.94rem;
+        margin-top: 0.94rem;
+        border: 1.14px solid #707070;
+        border-radius: 0.3rem;
+        padding: 0.5rem 0.6rem;
+    }
+
+    /* Adjust Video Preview */
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr; /* Define the rows for mobile */
+        padding: 0rem;
+        gap: 0rem;
+    }
+
+    .main-video {
+        border-radius: 0rem;
+    }
+
+    /* Adjust Description Section */
+    .description-wrapper {
+        display: none;
+        max-height: 6.31rem;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .main-video-wrapper .title {
+        font-size: 1.15rem;
+        margin: 0.75rem 0rem 0.75rem 0.625rem;
+    }
+
+    .open-description {
+        display: inline-block;
+    }
+
+    .description-wrapper.show {
+        display: block;
+    }
+
+    .description-wrapper.expanded {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .main-video-wrapper .description-wrapper {
+        margin-bottom: 0.75rem;
+        visibility: visible;
+    }
+
+    .main-video-wrapper .description-wrapper .description-title {
+        font-size: 1rem;
+    }
+
+    .main-video-wrapper .description-wrapper .see-all {
+        font-size: 1rem;
+    }
+
+    .main-video-wrapper .description-wrapper .see-all:hover {
+        color: #3498db;
+    }
+    
+    .main-video-wrapper .description-wrapper p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    /* Adjust Playlist Section*/
+    .title-logout {
+        margin-top: 0rem;
+    }
+
+    .video-playlist .playlist-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #E0E0E0;
+    }
+
+    .logout {
+        padding: 0rem 0.8rem 0rem 0.625rem;
+    }
+
+    .logout:hover {
+        background: none;
+        cursor: none;
+    }
+
+    #logout-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    #video-info {
+        font-size: 1rem;
+        padding-top: 0.625rem;
+        padding-bottom: 0.3125rem;
+    }
+
+    .video-playlist .videos::-webkit-scrollbar {
+        width: 0.28rem;
+    }
+
+    .video-playlist .videos {
+        padding-bottom: 0.625rem;
+    }
+
+    .video-playlist .videos .video {
+        padding: 0.625rem;
+        margin-top: 0.3125rem;
+    }
+
+    .video-playlist .videos .video img {
+        max-width: 7rem;
+    }
+
+    .video-playlist .videos .video h3 {
+        font-size: 1rem;
+    }
+
+    .video-playlist .videos .video p {
+        font-size: 1rem;
+    }
 }
