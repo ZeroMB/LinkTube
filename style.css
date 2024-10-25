@@ -45,8 +45,8 @@ body {
 }
 
 .loader {
-    width: 45px;
-    height: 30px;
+    width: 60px;
+    height: 40px;
     animation: l1 2s infinite linear;
 }
 
@@ -324,14 +324,7 @@ body {
     padding: 0.75rem;
     padding-right: 0.94rem !important;
     display: none;
-    visibility: hidden;
-    animation: showArrow 0s forwards 0.38s;
-}
-
-@keyframes showArrow {
-    to {
-        visibility: visible;
-    }
+    visibility: visible;
 }
 
 .open-description img {
@@ -350,14 +343,7 @@ body {
     border-radius: 0.625rem;
     color: var(--text);
     overflow: hidden; /* Disable internal scrolling */
-    visibility: hidden;
-    animation: showDescription 0s forwards 0.38s;
-}
-
-@keyframes showDescription {
-    to {
-        visibility: visible;
-    }
+    visibility: visible;
 }
 
 .main-video-wrapper .description-wrapper.expanded {
@@ -437,14 +423,7 @@ body {
     padding: 0.47rem 0.625rem;
     height: fit-content;
     border-radius: 0.3125rem;
-    visibility: hidden;
-    animation: showLogout 0s forwards 0.38s;
-}
-
-@keyframes showLogout {
-    to {
-        visibility: visible;
-    }
+    visibility: visible;
 }
 
 .logout:hover {

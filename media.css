@@ -32,7 +32,8 @@
 
 @media (max-width: 480px) {
     .loader {
-        font-size: 24px;
+        width: 45px;
+        height: 30px;
     }
 
     /* Adjust Login Form */
