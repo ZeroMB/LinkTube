@@ -128,7 +128,7 @@ const toggleFullDescription = () => {
             elements.seeAllBtn.style.display = 'none';
         }
 
-        if (window.innerWidth > 990) {
+        if (window.innerWidth > 768) {
             scrollToTopOfDescription(elements.descriptionWrapper);
         }
     }
@@ -148,7 +148,7 @@ const toggleDescriptionExpansion = () => {
     elements.descriptionWrapper.classList.toggle('expanded');
     elements.seeAllBtn.textContent = elements.descriptionWrapper.classList.contains('expanded') ? 'See less' : 'See all';
 
-    if (elements.descriptionWrapper.classList.contains('expanded') && window.innerWidth > 990) {
+    if (elements.descriptionWrapper.classList.contains('expanded') && window.innerWidth > 768) {
         scrollToTopOfDescription(elements.descriptionWrapper);
     }
 };
@@ -376,7 +376,7 @@ const seekToTime = (time) => {
 
 // Reset Description View
 const resetDescriptionView = () => {
-    if (window.innerWidth > 990) {
+    if (window.innerWidth > 768) {
         elements.descriptionWrapper.classList.remove('expanded');
         elements.seeAllBtn.textContent = 'See all';
         elements.descriptionWrapper.classList.remove('show');
