@@ -527,8 +527,8 @@ body {
 .clear-icon {
     position: absolute;
     top: 62%;
-    right: 12px;
-    padding: 10px;
+    right: 10px;
+    padding: 10px 12px;
     transform: translateY(-50%);
     font-size: 18px;
     color: var(--button-hover);
