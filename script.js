@@ -337,6 +337,46 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.openDescriptionBtn.addEventListener('click', toggleFullDescription);
 });
 
+// Search Functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const searchBar = document.getElementById('search-bar');
+    const clearSearch = document.getElementById('clear-search');
+    const videoContainer = document.querySelector('.videos');
+
+    searchBar.addEventListener('input', function () {
+        const searchText = searchBar.value.toLowerCase();
+        const videoElements = videoContainer.querySelectorAll('.video');
+
+        clearSearch.style.display = searchText ? 'inline' : 'none';
+
+        videoElements.forEach(video => {
+            const videoTitle = video.querySelector('.title').textContent.toLowerCase();
+            if (videoTitle.includes(searchText)) {
+                video.style.display = 'flex';
+            } else {
+                video.style.display = 'none';
+            }
+        });
+
+        videoContainer.scrollTop = 0;
+    });
+
+    clearSearch.addEventListener('click', function () {
+        searchBar.value = '';
+        clearSearch.style.display = 'none';
+
+        const videoElements = videoContainer.querySelectorAll('.video');
+        videoElements.forEach(video => {
+            video.style.display = 'flex';
+        });
+
+        const activeVideo = videoContainer.querySelector('.video.active');
+        if (activeVideo) {
+            videoContainer.scrollTop = activeVideo.offsetTop - videoContainer.offsetTop;
+        }
+    });
+});
+
 // Format Description Text
 const formatDescription = (text) => {
     let formattedText = text.replace(
