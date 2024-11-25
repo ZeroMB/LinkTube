@@ -590,7 +590,7 @@ body {
 }
 
 .video-playlist .videos .video:hover {
-    background-color: var(--black-3);
+    background-color: var(--black-4);
     transform: scale(1.02);
 }
 
