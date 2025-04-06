@@ -574,6 +574,13 @@ body {
     cursor: all-scroll;
 }
 
+/* Firefox-only Styles */
+@-moz-document url-prefix() {
+    .video-playlist .videos {
+        scrollbar-color: var(--secondary) transparent;
+    }
+}
+
 /* Individual Video Item */
 .video-playlist .videos .video {
     position: relative;
